@@ -1,7 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
+
 #include <string>
 
 std::string get_board_letters();
-
-#endif

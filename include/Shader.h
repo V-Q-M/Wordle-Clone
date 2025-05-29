@@ -1,5 +1,4 @@
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #include "../include/glad/glad.h"
 #include <fstream>
@@ -112,5 +111,3 @@ public:
                        glm::value_ptr(mat));
   }
 };
-
-#endif
