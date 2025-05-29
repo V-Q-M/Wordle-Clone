@@ -67,10 +67,17 @@ int main() {
   glViewport(0, 0, 800, 600);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+  // Setup Input and Gamelogic
+  // init_input();
+  init_game();
+
   // Main render loop
   while (!glfwWindowShouldClose(window)) {
     // Input
     processInput(window);
+
+    // Here comes the game logic
+    update_game();
 
     // Clear screen
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
