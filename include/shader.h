@@ -2,8 +2,9 @@
 #define SHADER_H
 
 #include "../include/glad/glad.h"
-
 #include <fstream>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp> // for glm::value_ptr
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -21,6 +22,7 @@ public:
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try {
+      // open files
       vShaderFile.open(vertexPath);
       fShaderFile.open(fragmentPath);
       std::stringstream vShaderStream, fShaderStream;
@@ -57,7 +59,7 @@ public:
 
     // Fragment Shader
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &vShaderCode, NULL);
+    glShaderSource(fragment, 1, &fShaderCode, NULL);
     glCompileShader(fragment);
 
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
@@ -84,7 +86,10 @@ public:
     glDeleteShader(fragment);
   };
 
-  void use() { glUseProgram(ID); };
+  void use() {
+    //
+    glUseProgram(ID);
+  };
 
   void setBool(const std::string &name, bool value) const {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
@@ -94,6 +99,17 @@ public:
   }
   void setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+  }
+
+  // New additions:
+  void setVec3(const std::string &name, const glm::vec3 &value) const {
+    glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1,
+                 glm::value_ptr(value));
+  }
+
+  void setMat4(const std::string &name, const glm::mat4 &mat) const {
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
+                       glm::value_ptr(mat));
   }
 };
 

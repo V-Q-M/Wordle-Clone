@@ -1,9 +1,7 @@
-// game.h
 #ifndef GAME_H
 #define GAME_H
+#include <string>
 
-void init_game();
-void update_game();
-bool is_game_over();
+std::string get_board_letters();
 
 #endif
