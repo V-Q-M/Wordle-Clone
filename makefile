@@ -6,7 +6,7 @@ CXXFLAGS := -Iinclude -I/usr/include/freetype2 -Wall -Wextra -std=c++17
 LIBS := -lglfw -lGL -lfreetype -lX11 -pthread
 
 # Source files
-SRCS := src/Main.cpp src/Game.cpp src/Renderer.cpp src/TextRenderer.cpp libs/glad.c
+SRCS := src/Main.cpp src/Game.cpp src/WordPicker.cpp src/Renderer.cpp src/TextRenderer.cpp libs/glad.c
 
 # Build directory
 BUILD_DIR := build
