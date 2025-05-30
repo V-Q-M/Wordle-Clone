@@ -85,12 +85,17 @@ int main() {
     // Input
     processInput(window);
 
+    int GAME_WON = 1;
+    int GAME_LOST = 2;
+
     // Here comes the game logic
     gamestate = update_game();
-    if (gamestate == 1) {
+    if (gamestate == GAME_WON) {
       // has won
-    } else if (gamestate == 2) {
+      break; // exit game for now
+    } else if (gamestate == GAME_LOST) {
       // has lost
+      break; // exit game for now
     }
 
     // Clear screen
