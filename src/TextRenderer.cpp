@@ -127,8 +127,8 @@ void TextRenderer::RenderText(Shader &shader, const std::string &text, float x,
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
-
-    x += (ch.Advance >> 6) * scale; // advance is in 1/64 pixels
+    float spacing = 24.0;
+    x += ((ch.Advance >> 6) + spacing) * scale; // advance is in 1/64 pixels
   }
 
   glBindVertexArray(0);

@@ -34,7 +34,7 @@ int main() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  GLFWwindow *window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+  GLFWwindow *window = glfwCreateWindow(800, 600, "Wordle", NULL, NULL);
   if (window == NULL) {
     std::cout << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
@@ -58,7 +58,7 @@ int main() {
 
   // Initialize TextRenderer with font and font size
   Renderer renderer(ourShader);
-  TextRenderer textRenderer("assets/fonts/arial.ttf", 48);
+  TextRenderer textRenderer("assets/fonts/LiberationMono.ttf", 38);
 
   // Set up projection matrix once and set uniforms on text shader
   glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
@@ -106,7 +106,7 @@ int main() {
     renderer.Draw();
 
     // Draw the text. get_board_letters calls from the Game.cpp file
-    textRenderer.RenderText(textShader, get_board_letters(), 300.0f, 300.0f,
+    textRenderer.RenderText(textShader, get_board_letters(), 300.0f, 400.0f,
                             1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 
     glfwSwapBuffers(window);
