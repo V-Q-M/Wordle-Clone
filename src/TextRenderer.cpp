@@ -98,7 +98,14 @@ void TextRenderer::RenderText(Shader &shader, const std::string &text, float x,
   glActiveTexture(GL_TEXTURE0);
   glBindVertexArray(VAO);
 
+  float origX = x; // store the original x for new lines
+
   for (const char &c : text) {
+    if (c == '\n') {
+      x = origX;
+      y -= (Characters['H'].Size.y + 10) * scale; // line height heuristic
+      continue;
+    }
     Character ch = Characters[c];
 
     float xpos = x + ch.Bearing.x * scale;
