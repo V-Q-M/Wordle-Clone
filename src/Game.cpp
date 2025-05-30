@@ -87,7 +87,7 @@ void update_input() {
         enter_pressed = false;
         // reset word_pos
         word_pos = 0;
-        board_letters[board_letters_index] = '\\';
+        //       board_letters[board_letters_index] = '\\';
       } else {
         // std::cout << "Invalid guess.";
       }
