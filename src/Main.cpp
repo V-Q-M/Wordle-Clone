@@ -23,6 +23,8 @@ void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
 }
+// Tracks wether the player has won or lost
+int gamestate = 0; // 1 means won, 2 means lost
 
 int main() {
   // Initialize GLFW
@@ -77,7 +79,12 @@ int main() {
     processInput(window);
 
     // Here comes the game logic
-    update_game();
+    gamestate = update_game();
+    if (gamestate == 1) {
+      // has won
+    } else if (gamestate == 2) {
+      // has lost
+    }
 
     // Clear screen
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);

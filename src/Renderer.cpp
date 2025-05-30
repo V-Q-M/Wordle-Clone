@@ -2,11 +2,22 @@
 #include "../include/glad/glad.h"
 
 // clang-format off
+/*
 static float triangleVerts[] = {
     // positions         // colors
      0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
     -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
      0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f};
+*/
+static float triangleVerts[] = {
+    // positions         // colors
+     0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+
+    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+    -0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f};
 
 // clang-format on
 Renderer::Renderer(Shader &shaderRef) : shader(shaderRef) { SetupGeometry(); }
@@ -41,6 +52,6 @@ void Renderer::Draw() {
   shader.use();
   shader.setFloat("someUniform", 1.0f);
   glBindVertexArray(VAO);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  glDrawArrays(GL_TRIANGLES, 0, 6);
   glBindVertexArray(0);
 }
