@@ -75,17 +75,22 @@ void update_input() {
         attempt[i] = board_letters[check_index];
       }
 
-      // Append newline safely
-      if (board_letters_index < MAX_AMOUNT_CHARS) {
-        board_letters[board_letters_index] = '\n';
-        board_letters_index++;
-      }
+      // process attempt
+      if (attempt_is_valid(attempt)) {
+        // Append newline safely
+        if (board_letters_index < MAX_AMOUNT_CHARS) {
+          board_letters[board_letters_index] = '\n';
+          board_letters_index++;
+        }
 
-      attempt_count++;
-      enter_pressed = false;
-      // reset word_pos
-      word_pos = 0;
-      board_letters[board_letters_index] = 'n';
+        // attempt_count++;
+        enter_pressed = false;
+        // reset word_pos
+        word_pos = 0;
+        board_letters[board_letters_index] = 'n';
+      } else {
+        std::cout << "Invalid guess.";
+      }
     }
 
     if (backspace_pressed && word_pos > 0) {
@@ -111,9 +116,11 @@ int update_game() {
 
   if (attempt == solution) {
     // has won
+    std::cout << "WON";
     return 2;
   } else if (board_letters_index == MAX_AMOUNT_CHARS) {
     // has lost
+    std::cout << "LOST";
     return 1;
   } else {
     // continue
