@@ -6,10 +6,44 @@ Currently only CLI is supported, but a GUI is on it's way.
 
 ## Installation
 
-Download the binary of your choice, make it runnable with
-`chmod +x 777` and run it with `./wordle`.
+### Windows
 
-Alternatively clone the repo and run the makefile with
-`make`
+Download the binary of your choice, make it executable with
+
+and run it with
+
+```
+./Wordle.exe
+```
+
+### Linux
+
+Download the binary of your choice, make it runnable with
+
+```
+chmod +x Wordle
+```
+
+and run it with
+
+```
+./Wordle
+```
+
+Alternatively clone the repo with
+
+```
+git clone https://github.com/V-Q-M/Wordle.git
+```
+
+Run the makefile with
+
+```
+make
+```
+
 Then start the game with
-`./build/wordle`
+
+```
+./build/Wordle
+```
