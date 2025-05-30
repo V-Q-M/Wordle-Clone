@@ -1,17 +1,19 @@
 #include "../include/Game.h"
+#include "../include/Input.h"
 #include "../include/WordPicker.h"
+#include <iostream>
 
 int MAX_ATTEMPT_COUNT = 6;
-int MAX_WORD_POS = 5;
+int MAX_WORD_LENGTH = 5;
+int MAX_AMOUNT_CHARS = MAX_WORD_LENGTH * MAX_ATTEMPT_COUNT + MAX_ATTEMPT_COUNT;
 
 int attempt_count = 0;
 int word_pos = 0;
 
 std::string solution;
-std::string attempt(MAX_WORD_POS, ' ');
+std::string attempt(MAX_WORD_LENGTH, ' ');
 
-std::string board_letters(MAX_ATTEMPT_COUNT *MAX_WORD_POS + MAX_ATTEMPT_COUNT,
-                          ' ');
+std::string board_letters(MAX_AMOUNT_CHARS, ' ');
 int board_letters_index = 0; //:
 //
 //
@@ -21,21 +23,23 @@ std::string get_board_letters() {
   return board_letters;
 }
 
-void init_game() {
+int init_game() {
   // pick random word
   // reset all values to default
   attempt_count = 0;
   word_pos = 0;
   attempt = "";
   solution = random_word();
-
-  board_letters[0] = 'p';
-  board_letters[1] = 'i';
-  board_letters[2] = 'n';
-  board_letters[3] = 'g';
-  board_letters[4] = 'o';
-  word_pos += 5;
-  board_letters_index += 5;
+  /*
+    board_letters[0] = 'p';
+    board_letters[1] = 'i';
+    board_letters[2] = 'n';
+    board_letters[3] = 'g';
+    board_letters[4] = 'o';
+    word_pos += 5;
+    board_letters_index += 5;
+  */
+  return 0;
 }
 
 int count = 0;
@@ -54,31 +58,50 @@ void test_font_render() {
   count++;
 }
 
-bool enter_pressed = true;
-
 void update_input() {
-  // enter sets attempt and adds linebreak
-  if (enter_pressed) {
-    // try attempt
-    attempt.resize(MAX_WORD_POS);
-    for (int i = 0; i < MAX_WORD_POS; i++) {
-      int check_index = board_letters_index - MAX_WORD_POS + i;
-      attempt[i] = board_letters[check_index];
+  bool enter_pressed = get_enter_pressed();
+  bool backspace_pressed = get_backspace_pressed();
+  char key_char = get_letter_key_pressed();
+
+  // Check if outofbounds
+  if (board_letters_index != MAX_AMOUNT_CHARS) {
+
+    // enter sets attempt and adds linebreak
+    if (enter_pressed && word_pos == MAX_WORD_LENGTH) {
+      // try attempt
+      attempt.resize(MAX_WORD_LENGTH);
+      for (int i = 0; i < MAX_WORD_LENGTH; i++) {
+        int check_index = board_letters_index - MAX_WORD_LENGTH + i;
+        attempt[i] = board_letters[check_index];
+      }
+
+      // Append newline safely
+      if (board_letters_index < MAX_AMOUNT_CHARS) {
+        board_letters[board_letters_index] = '\n';
+        board_letters_index++;
+      }
+
+      attempt_count++;
+      enter_pressed = false;
+      // reset word_pos
+      word_pos = 0;
+      board_letters[board_letters_index] = 'n';
     }
 
-    // Append newline safely
-    if (board_letters_index <
-        MAX_ATTEMPT_COUNT * MAX_WORD_POS + MAX_ATTEMPT_COUNT) {
-      board_letters[board_letters_index] = '\n';
+    if (backspace_pressed && word_pos > 0) {
+      board_letters_index--;
+      board_letters[board_letters_index] = ' ';
+      word_pos--;
+    }
+
+    if (key_char != 0 && word_pos < MAX_WORD_LENGTH) {
+      board_letters[board_letters_index] = key_char;
       board_letters_index++;
+      word_pos++;
+      std::cout << key_char;
     }
-
-    attempt_count++;
-    enter_pressed = false;
-    // reset word_pos
-    word_pos = 0;
-    board_letters[board_letters_index] = 'x';
   }
+  release_keys();
 }
 
 int update_game() {
@@ -89,7 +112,7 @@ int update_game() {
   if (attempt == solution) {
     // has won
     return 2;
-  } else if (attempt_count == MAX_ATTEMPT_COUNT) {
+  } else if (board_letters_index == MAX_AMOUNT_CHARS) {
     // has lost
     return 1;
   } else {

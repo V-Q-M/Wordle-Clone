@@ -10,6 +10,7 @@
 
 #include "../include/Shader.h"
 #include "../include/Game.h"
+#include "../include/Input.h"
 #include "../include/TextRenderer.h" 
 #include "../include/Renderer.h"
 
@@ -70,8 +71,14 @@ int main() {
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
   // Setup Input and Gamelogic
-  // init_input();
-  init_game();
+  int input_return_code = init_input(window);
+  int game_return_code = init_game();
+  if (input_return_code != 0) {
+    std::cout << "ERROR::FAILED_INPUT_SETUP";
+  }
+  if (game_return_code != 0) {
+    std::cout << "ERROR::FAILED_GAME_SETUP";
+  }
 
   // Main render loop
   while (!glfwWindowShouldClose(window)) {
